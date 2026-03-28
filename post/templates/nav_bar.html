@@ -1,16 +1,24 @@
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-brand">HackerNews</a>
 
-{% load static %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid" style="background-color: #ff6600">
-    <a class="navbar-brand" href="{% url 'posts' %}">
-      <img src="{% static 'hn_logo.svg' %}" alt="Logo" width="24" height="24" class="d-inline-block align-text-top bg-white border">
-      Hackernews
-    </a>
-    <a href="{% url 'home' %}">홈으로</a>
-    <div class="collapse navbar-collapse">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="{% url 'post_create' %}">새 글 작성</a>
-      </div>
-    </div>
-  </div>
+    <a href="{% url 'posts' %}" class="navbar-link">글 목록</a>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}" class="navbar-link">글 작성</a>
+
+        <div class="navbar-divider"></div>
+
+        <a href="{% url 'password_change' %}" class="navbar-link">
+            {{ user.username }}
+        </a>
+
+        <form class="navbar-form" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="navbar-btn-logout">로그아웃</button>
+        </form>
+    {% else %}
+        <div class="navbar-divider"></div>
+        <a href="{% url 'login' %}" class="navbar-link">로그인</a>
+        <a href="{% url 'sign_up' %}" class="navbar-link">회원가입</a>
+    {% endif %}
 </nav>

@@ -1,20 +1,49 @@
 {% extends 'base.html' %}
 
+{% block title %}글 목록{% endblock %}
+
 {% block content %}
+<div class="container">
 
-<h2>게시글 목록</h2>
-{% if posts %}
-    <ol type="1">
-        {% for post in posts %}
-            <li>
-                <a href="{% url 'post' post.id %}">{{ post.title }}</a>
-            </li>
-        {% endfor%}
-    </ol>
-{% else %}
-    <p>No Posts!</p>
-{% endif %}
+    <div class="page-header">
+        <div>
+            <div class="section-label">Posts</div>
+            <h2 class="page-header-title">게시글 목록</h2>
+        </div>
+        {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}" class="btn btn-ghost">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            새 글 작성
+        </a>
+        {% endif %}
+    </div>
 
+    {% if posts %}
+        <div class="post-list">
+            {% for post in posts %}
+            <a href="{% url 'post' post.id %}" class="post-item">
+                <div class="post-item-title">{{ post.title }}</div>
+                <div class="post-item-meta">
+                    <span>{{ forloop.counter }}</span>
+                    {% if post.author %}
+                    <span>· {{ post.author }}</span>
+                    {% endif %}
+                    {% if post.created_at %}
+                    <span>· {{ post.created_at|date:"Y.m.d" }}</span>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M9 16h6M7 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="7" y="2" width="10" height="4" rx="1"/></svg>
+            <p>아직 게시글이 없어요</p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'post_create' %}" class="btn btn-primary" style="width:auto; margin-top:0.4rem;">첫 글 작성하기</a>
+            {% endif %}
+        </div>
+    {% endif %}
 
-
+</div>
 {% endblock %}

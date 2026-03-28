@@ -8,7 +8,7 @@ from post.models import Post
 
 class PostListView(View):
     def get(self, request):
-        posts = Post.objects.all()
+        posts = Post.objects.all().order_by('-created_at')
         context = {'posts': posts, 'form': PostForm}
         return render(request, 'post_list.html', context)
 
