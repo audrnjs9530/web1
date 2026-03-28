@@ -1,0 +1,276 @@
+/* ── reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── variables ── */
+:root {
+    --bg:         #0d0d0f;
+    --surface:    #16161a;
+    --surface2:   #1e1e24;
+    --border:     #2a2a30;
+    --accent:     #e8c97a;
+    --accent-dim: rgba(232, 201, 122, 0.12);
+    --accent-hover: rgba(232, 201, 122, 0.22);
+    --text:       #f0ede8;
+    --muted:      #7a7880;
+    --error:      #e07070;
+    --success:    #6fcf97;
+    --input-bg:   #1e1e24;
+    --radius-sm:  8px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+}
+
+/* ── body ── */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2.4rem 1.4rem;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 50% at 15% 20%, rgba(232,201,122,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 80%, rgba(130,100,200,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── container ── */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(22px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── back link ── */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+}
+.back-link:hover { color: var(--accent); }
+.back-link svg { width: 15px; height: 15px; }
+
+/* ── profile card ── */
+.profile-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    margin-bottom: 1.4rem;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 16px 40px rgba(0,0,0,0.4);
+    flex-wrap: wrap;
+}
+
+.profile-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+    border: 1px solid rgba(232,201,122,0.3);
+    color: var(--accent);
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+}
+
+.profile-username {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+}
+
+.profile-email {
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+/* ── buttons ── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.62rem 1.1rem;
+    border-radius: var(--radius-sm);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.btn:hover  { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.04); }
+
+.btn-ghost {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid rgba(232,201,122,0.2);
+}
+.btn-ghost:hover { background: var(--accent-hover); }
+
+/* ── divider ── */
+.divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.4rem 0;
+}
+
+/* ── my posts section ── */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.posts-count {
+    font-size: 0.76rem;
+    color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 0.28rem 0.75rem;
+}
+
+/* ── post list ── */
+.post-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.post-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.post-item:hover {
+    border-color: rgba(232,201,122,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.post-item-title {
+    font-size: 0.96rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.post-item-meta {
+    font-size: 0.74rem;
+    color: var(--muted);
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.points-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--accent);
+    font-weight: 600;
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-brand">HackerNews</a>
+
+    <a href="{% url 'posts' %}" class="navbar-link">글 목록</a>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}" class="navbar-link">글 작성</a>
+
+        <div class="navbar-divider"></div>
+
+        <a href="{% url 'mypage' %}" class="navbar-link navbar-username">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            {{ user.username }}
+        </a>
+
+        <form class="navbar-form" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="navbar-btn-logout">로그아웃</button>
+        </form>
+    {% else %}
+        <div class="navbar-divider"></div>
+        <a href="{% url 'login' %}" class="navbar-link">로그인</a>
+        <a href="{% url 'sign_up' %}" class="navbar-link">회원가입</a>
+    {% endif %}
+</nav>}
+
+/* ── empty state ── */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 3.5rem 2rem;
+    color: var(--muted);
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+.empty-state svg { width: 44px; height: 44px; opacity: 0.35; }
+.empty-state p { font-size: 0.88rem; }
