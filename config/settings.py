@@ -129,5 +129,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',   # 이 줄 있어야 함
+]
+
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
