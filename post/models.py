@@ -24,5 +24,31 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.id}, {self.title}, {self.author}"
 
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='liked_comments',
+        blank=True,
+    )
+
+    @property
+    def points(self):
+        return self.likes.count()
+
     def __str__(self):
-        return f"{self.id}, {self.title}, {self.author}"
+        return f"{self.author} - {self.post.title}"
