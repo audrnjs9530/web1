@@ -42,7 +42,8 @@ class PostCreateView(LoginRequiredMixin, View):
 class PostDetailView(View):
     def get(self, request, post_id):
         post = get_object_or_404(Post, id=post_id)
-        context = {'post': post}
+        is_liked = post.likes.filter(id=request.user.id).exists()
+        context = {'post': post, 'is_liked': is_liked}
         return render(request, 'post_detail.html', context)
 
 class PostLikeView(LoginRequiredMixin, View):
@@ -50,7 +51,11 @@ class PostLikeView(LoginRequiredMixin, View):
 
     def post(self, request, post_id):
         post = get_object_or_404(Post, id=post_id)
-        post.points = F("points") + 1
-        post.save()
-        post.refresh_from_db()
-        return render(request, 'post_detail.html', {'post': post})
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)  # 취소
+        else:
+            post.likes.add(request.user)
+
+        is_liked = post.likes.filter(id=request.user.id).exists()
+        context = {'post': post, 'is_liked': is_liked}
+        return render(request, 'post_detail.html', context)

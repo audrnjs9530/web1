@@ -509,3 +509,16 @@ form p ul.errorlist li {
     color: var(--accent);
     font-weight: 600;
 }
+
+
+.btn-liked {
+    background: rgba(232, 201, 122, 0.85);
+    color: #0d0d0f;
+    font-weight: 700;
+    border: 1px solid var(--accent);
+    box-shadow: 0 4px 16px rgba(232,201,122,0.3);
+}
+.btn-liked:hover {
+    background: var(--accent);
+    box-shadow: 0 6px 24px rgba(232,201,122,0.4);
+}
