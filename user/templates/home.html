@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>HomePage</h1>
+
+    <h3>안녕하세요 {{ user.username | default:'게스트' }} 님</h3>
+
+
+    <div>
+        {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">로그아웃</button>
+            <a href="{% url 'post_create' %}">글 작성하기</a>
+            <a href="{% url 'password_change' %}">비밀번호 변경</a>
+        </form>
+
+        {% else %}
+            <a href="{% url 'login' %}"> 로그인</a>
+            <a href="{% url 'sign_up' %}"> 회원가입</a>
+        {% endif %}
+        <a href="{% url 'posts' %}">글 목록</a>
+    </div>
+
+</body>
+</html>

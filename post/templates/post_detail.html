@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ post.title }}</h2>
+<ul>
+    <li>Author: {{ post.author }}</li>
+    <li>Date: {{ post.created_at }}</li>
+    <li>Points: {{ post.points }}</li>
+    <li>Content: {{ post.content }}</li>
+</ul>
+
+<form action="{% url 'post_like' post.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Like+">
+</form>
+
+<a href="{% url 'posts' %}">> 게시글 목록</a>
+
+
+{% endblock %}
