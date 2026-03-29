@@ -1,11 +1,9 @@
 <nav class="navbar">
     <a href="{% url 'home' %}" class="navbar-brand">HackerNews</a>
 
-    <a href="{% url 'posts' %}" class="navbar-link">글 목록</a>
+    <a href="{% url 'boards' %}" class="navbar-link">글 목록</a>
 
     {% if user.is_authenticated %}
-        <a href="{% url 'post_create' %}" class="navbar-link">글 작성</a>
-
         <div class="navbar-divider"></div>
 
         <a href="{% url 'mypage' %}" class="navbar-link navbar-username">

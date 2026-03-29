@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}게시판{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div>
+            <div class="section-label">Boards</div>
+            <h2 class="page-header-title">게시판</h2>
+        </div>
+    </div>
+
+    <div class="post-list">
+        {% for board in boards %}
+        <a href="{% url 'posts' board.id %}" class="post-item">
+            <div class="post-item-title">{{ board.name }}</div>
+            <div class="post-item-meta">
+                <span>{{ board.description }}</span>
+                <span>·</span>
+                <span>글 {{ board.posts.count }}개</span>
+            </div>
+        </a>
+        {% empty %}
+        <div class="empty-state">
+            <p>게시판이 없어요 (관리자에게 문의)</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

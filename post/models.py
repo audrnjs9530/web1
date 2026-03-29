@@ -1,7 +1,22 @@
 from django.db import models
 from django.conf import settings
 # Create your models here.
+
+
+class Board(models.Model):
+    name = models.CharField(max_length=20)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
+    board = models.ForeignKey(
+        Board, on_delete=models.CASCADE,
+        related_name='posts',
+        null=True,        # 임시로 추가
+        blank=True,
+    )
     title = models.CharField(max_length=200)
     content = models.TextField()
     author = models.ForeignKey(
@@ -52,3 +67,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.author} - {self.post.title}"
+

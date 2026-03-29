@@ -33,16 +33,11 @@
         {% if user.is_authenticated %}
 
             <!-- 글 목록 -->
-            <a href="{% url 'posts' %}" class="btn btn-primary">
+            <a href="{% url 'boards' %}" class="btn btn-primary">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
                 글 목록 보기
             </a>
 
-            <!-- 글 작성 -->
-            <a href="{% url 'post_create' %}" class="btn btn-ghost">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                새 글 작성하기
-            </a>
 
             <div class="btn-row">
                 <!-- 비밀번호 변경 -->

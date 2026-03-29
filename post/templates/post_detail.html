@@ -7,7 +7,7 @@
     <div class="post-detail">
 
         <!-- 상단 뒤로가기 -->
-        <a href="{% url 'posts' %}" class="back-link">
+        <a href="{% url 'posts' post.board_id %}" class="back-link">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
             게시글 목록
         </a>
@@ -37,7 +37,7 @@
 
         <!-- 액션 버튼 -->
         <div class="post-actions">
-            <form action="{% url 'post_like' post.id %}" method="POST">
+            <form action="{% url 'post_like' post.board_id post.id %}" method="POST">
                 {% csrf_token %}
                 <button type="submit" class="btn {% if is_liked %}btn-liked{% else %}btn-ghost{% endif %}">
                     <svg class="icon" viewBox="0 0 24 24"
@@ -49,7 +49,7 @@
                 </button>
             </form>
 
-            <a href="{% url 'posts' %}" class="btn btn-secondary">
+            <a href="{% url 'posts' post.board_id %}" class="btn btn-secondary">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
                 목록으로
             </a>
@@ -63,7 +63,7 @@
             <h4 class="comment-count">댓글 {{ comments.count }}개</h4>
 
             {% if user.is_authenticated %}
-            <form action="{% url 'comment_create' post.id %}" method="POST" class="comment-form">
+            <form action="{% url 'comment_create' post.board_id post.id %}" method="POST" class="comment-form">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
                 <button type="submit" class="btn btn-ghost btn-sm">댓글 작성</button>

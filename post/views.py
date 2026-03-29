@@ -4,23 +4,33 @@ from post.forms import PostForm, CommentForm
 from django.db.models import F
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from post.models import Post, Comment
+from post.models import Post, Comment, Board
+
+
+class BoardListView(View):
+    def get(self, request):
+        boards = Board.objects.all()
+        return render(request, 'board_list.html', {'boards': boards})
+
 
 class PostListView(View):
-    def get(self, request):
-        posts = Post.objects.all().order_by('-created_at')
-        context = {'posts': posts, 'form': PostForm}
+    def get(self, request, board_id):
+        board = get_object_or_404(Board, id=board_id)
+        posts = Post.objects.all().filter(board=board).order_by('-created_at')
+        context = {'posts': posts, 'form': PostForm, 'board': board}
         return render(request, 'post_list.html', context)
 
 
 class PostCreateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
-    def get(self, request):
-        context = {'form': PostForm}
+    def get(self, request, board_id):
+        board = get_object_or_404(Board, id=board_id)
+        context = {'form': PostForm, 'board': board}
         return render(request, 'post_create.html', context)
 
-    def post(self, request):
+    def post(self, request, board_id):
+        board = get_object_or_404(Board, id=board_id)
         form = PostForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data['title']
@@ -31,22 +41,24 @@ class PostCreateView(LoginRequiredMixin, View):
                 title=title,
                 content=content,
                 author=author,
+                board=board
             )
 
             return render(request, 'post_detail.html', {'post': post})
 
         else:
-            return redirect('posts')
+            return redirect('posts', board_id=board_id)
 
 
 class PostDetailView(View):
-    def get(self, request, post_id):
+    def get(self, request, board_id, post_id):
         post = get_object_or_404(Post, id=post_id)
         is_liked = post.likes.filter(id=request.user.id).exists()
         comments = post.comments.order_by('-created_at')
         comment_form = CommentForm()
         context = {
             'post': post,
+            'board_id': board_id,
             'is_liked': is_liked,
             'comments': comments,
             'comment_form': comment_form,
