@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from post.forms import PostForm, CommentForm
@@ -16,8 +17,14 @@ class BoardListView(View):
 class PostListView(View):
     def get(self, request, board_id):
         board = get_object_or_404(Board, id=board_id)
-        posts = Post.objects.all().filter(board=board).order_by('-created_at')
+        posts_all = Post.objects.all().filter(board=board).order_by('-created_at')
+
+        paginator = Paginator(posts_all, 10)
+        page_number = request.GET.get('page', 1)
+        posts = paginator.get_page(page_number)
+
         context = {'posts': posts, 'form': PostForm, 'board': board}
+
         return render(request, 'post_list.html', context)
 
 

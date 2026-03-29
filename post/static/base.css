@@ -326,6 +326,38 @@ form p ul.errorlist li {
 }
 
 /* ════════════════════════════════════════
+   PAGINATION
+   ════════════════════════════════════════ */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.page-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: all 0.18s;
+}
+.page-btn:hover { color: var(--accent); border-color: var(--accent); }
+.page-btn.active { background: var(--accent); color: #0d0d0f; font-weight: 700; border-color: var(--accent); }
+.page-btn.disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+
+/* ════════════════════════════════════════
    POST DETAIL
    ════════════════════════════════════════ */
 .post-detail { max-width: 680px; }
@@ -606,3 +638,5 @@ form p ul.errorlist li {
     text-align: center;
     padding: 2rem;
 }
+
+

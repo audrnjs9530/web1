@@ -7,7 +7,6 @@
 
     <div class="page-header">
         <div>
-
             <h2 class="page-header-title">{{ board }}</h2>
         </div>
         {% if user.is_authenticated %}
@@ -24,7 +23,7 @@
             <a href="{% url 'post' board.id post.id %}" class="post-item">
                 <div class="post-item-title">{{ post.title }}</div>
                 <div class="post-item-meta">
-                    <span>{{ forloop.counter }}</span>
+                    <span>{{ posts.start_index|add:forloop.counter0 }}</span>
                     {% if post.author %}
                     <span>· {{ post.author }}</span>
                     {% endif %}
@@ -35,6 +34,31 @@
             </a>
             {% endfor %}
         </div>
+
+        {% if posts.has_other_pages %}
+        <div class="pagination">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}" class="page-btn">←</a>
+            {% else %}
+                <span class="page-btn disabled">←</span>
+            {% endif %}
+
+            {% for num in posts.paginator.page_range %}
+                {% if posts.number == num %}
+                    <span class="page-btn active">{{ num }}</span>
+                {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                    <a href="?page={{ num }}" class="page-btn">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}" class="page-btn">→</a>
+            {% else %}
+                <span class="page-btn disabled">→</span>
+            {% endif %}
+        </div>
+        {% endif %}
+
     {% else %}
         <div class="empty-state">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M9 16h6M7 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="7" y="2" width="10" height="4" rx="1"/></svg>
