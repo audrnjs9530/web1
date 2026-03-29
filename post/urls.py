@@ -17,6 +17,9 @@ urlpatterns = [
     # 글 좋아요
     path('<int:board_id>/post/<int:post_id>/like/', views.PostLikeView.as_view(), name='post_like'),
 
+    # 글 삭제
+    path('<int:board_id>/post/<int:post_id>/delete', views.PostDeleteView.as_view(), name='post_delete'),
+
     # 댓글 작성
     path('<int:board_id>/post/<int:post_id>/comment/', views.CommentCreateView.as_view(), name='comment_create'),
 

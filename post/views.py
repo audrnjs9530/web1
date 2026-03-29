@@ -76,7 +76,7 @@ class PostDetailView(View):
 class PostLikeView(LoginRequiredMixin, View):
     login_url = '/login/'
 
-    def post(self, request, post_id):
+    def post(self, request, board_id, post_id):
         post = get_object_or_404(Post, id=post_id)
         if request.user in post.likes.all():
             post.likes.remove(request.user)  # 취소
@@ -84,12 +84,17 @@ class PostLikeView(LoginRequiredMixin, View):
             post.likes.add(request.user)
 
         is_liked = post.likes.filter(id=request.user.id).exists()
-        context = {'post': post, 'is_liked': is_liked}
+        context = {'post': post, 'is_liked': is_liked, 'board_id': board_id}
         return render(request, 'post_detail.html', context)
 
 
 
-
+class PostDeleteView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def post(self, request,board_id, post_id):
+        post = Post.objects.filter(author=request.user).get(id=post_id,board_id=board_id)
+        post.delete()
+        return redirect('mypage')
 
 
 
